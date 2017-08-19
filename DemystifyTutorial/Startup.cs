@@ -19,8 +19,10 @@ namespace DemystifyTutorial {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            //Adds cookie middleware to the services collection and configures it
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = new PathString("/account/login"));
+
             services.AddMvc();
         }
 
@@ -35,6 +37,7 @@ namespace DemystifyTutorial {
 
             app.UseStaticFiles();
 
+            //Adds the authentication middleware to the pipeline
             app.UseAuthentication();
 
             app.UseMvc(routes => {
