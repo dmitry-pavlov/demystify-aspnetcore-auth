@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,10 @@ namespace DemystifyTutorial.Part1 {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            //Adds cookie middleware to the services collection and configures it
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = new PathString("/account/login"));
+
             services.AddMvc();
         }
 
@@ -30,6 +36,10 @@ namespace DemystifyTutorial.Part1 {
             }
 
             app.UseStaticFiles();
+
+            //Adds the authentication middleware to the pipeline
+            app.UseAuthentication();
+
 
             app.UseMvc(routes => {
                 routes.MapRoute(
