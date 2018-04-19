@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DemystifyTutorial.Part1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DemystifyTutorial.Part1.Controllers {
     public class HomeController : Controller {
@@ -13,6 +14,11 @@ namespace DemystifyTutorial.Part1.Controllers {
         }
 
         public IActionResult About() {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Members() {
             return View();
         }
 
