@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
 
-namespace DemystifyTutorial {
+namespace DemystifyTutorial.Part1 {
     public class Startup {
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -29,8 +29,8 @@ namespace DemystifyTutorial {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             if (env.IsDevelopment()) {
-                app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
             } else {
                 app.UseExceptionHandler("/Home/Error");
             }
@@ -39,6 +39,7 @@ namespace DemystifyTutorial {
 
             //Adds the authentication middleware to the pipeline
             app.UseAuthentication();
+
 
             app.UseMvc(routes => {
                 routes.MapRoute(
